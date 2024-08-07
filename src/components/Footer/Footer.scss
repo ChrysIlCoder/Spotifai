@@ -1,0 +1,164 @@
+.footer_container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  background: black;
+  grid-column: span 3;
+  overflow-x: hidden;
+  color: white;
+
+  &__left_side {
+    display: flex;
+    align-items: center;
+    justify-self: start;
+    gap: 12px;
+
+    &__cover {
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+      object-fit: cover;
+    }
+
+    &__song_info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      max-width: 250px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &__title, &__artists {
+        overflow: hidden;
+        max-width: 250px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &__title {
+        cursor: pointer;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &__artists {
+        color: #B3B3B3;
+
+        &__artist {
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  &__center_console {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 500px;
+
+    &__top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      &__back, &__forward {
+        transition: color 100ms ease-in-out;
+        color: #D9D9D9;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+          color: white;
+        }
+      }
+
+      &__shuffle, &__loop {
+        transition: color 100ms ease-in-out;
+        color: #D9D9D9;
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin: 0 10px;
+
+        &:hover {
+          color: white;
+        }
+      }
+
+      &__play {
+        background: white;
+        color: black;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        padding-top: 2px;
+        padding-left: 2px;
+        border: none;
+        cursor: pointer;
+      }
+    }
+
+    &__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+    
+      &__current_time, &__total_time {
+        color: #B3B3B3;
+        font-size: 14px;
+        width: 30px;
+      }
+    
+      &__song_slider {
+        width: 100%;
+      }
+    }
+  }
+
+  &__notrack {
+    justify-self: center;
+    cursor: pointer;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__right_side {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: 6px;
+
+    &__icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &__icon {
+        width: 20px;
+        cursor: pointer;
+      }
+    }
+
+    &__slider {
+      max-width: 120px;
+    }
+  }
+}

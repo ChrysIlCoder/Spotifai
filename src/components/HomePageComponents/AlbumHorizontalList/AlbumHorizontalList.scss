@@ -1,0 +1,7 @@
+.genres_horizontal_grid_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  max-height: 340px;
+  gap: 16px;
+  overflow-y: hidden;
+}

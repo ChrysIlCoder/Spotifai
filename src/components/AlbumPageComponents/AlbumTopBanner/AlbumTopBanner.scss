@@ -1,0 +1,54 @@
+.album_top_banner_container {
+  display: flex;
+  align-items: flex-end;
+  gap: 32px;
+  padding: 0 40px;
+
+  &__cover {
+    width: 290px;
+    height: 290px;
+    object-fit: cover;
+    box-shadow: 0 4px 4px 0 rgba($color: #000000, $alpha: 0.25);
+    cursor: pointer;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &__title {
+      font-size: 70px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__album_info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      &__artists {
+        &__artist {
+          cursor: pointer;
+        
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      &__time {
+        opacity: 0.7;
+      }
+    }
+  }
+}

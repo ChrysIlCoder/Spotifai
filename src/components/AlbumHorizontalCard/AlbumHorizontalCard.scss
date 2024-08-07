@@ -1,0 +1,38 @@
+.album_horiziontal_card_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 82px;
+  max-width: 420px;
+  border-radius: 6px;
+  background: rgba($color: #FFF, $alpha: 0.1);
+  transition: all 100ms ease-in-out;
+  cursor: pointer;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    &__cover {
+      width: 82px;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 6px 0 0 6px;
+    }
+  }
+
+  &:hover {
+    background: rgba($color: #FFF, $alpha: 0.2);
+  }
+
+  &__play {
+    transition: opacity 100ms ease-in-out;
+    opacity: 0;
+    margin: 10px 20px;
+  }
+
+  &:hover > &__play {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,16 @@
+.albums_vertical_list_container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 18px;
+  
+  &__album {
+    transition: opacity 100ms ease-in-out;
+    opacity: 0.70;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

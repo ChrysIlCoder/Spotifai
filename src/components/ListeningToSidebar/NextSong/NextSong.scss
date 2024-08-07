@@ -1,0 +1,78 @@
+.next_song_container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba($color: #fff, $alpha: 0.05);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__next {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    &__queue {
+      font-weight: 500;
+      font-size: 14px;
+      opacity: 0.7;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  &__next_song {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    &__play {
+      background: none;
+      cursor: pointer;
+      color: white;
+      opacity: 0.7;
+      border: none;
+      transition: opacity 100ms ease-in-out;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &__song_info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      &__cover {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+
+      &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        &__title {
+          font-weight: 400;
+          font-size: 14px;
+        }
+
+        &__artist {
+          font-weight: 500;
+          opacity: 0.7;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,109 @@
+.toolbar_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__left_side {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &__play {
+      margin-right: 30px;
+    }
+
+    &__favorite {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+    }
+  }
+
+  &__right_side {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+
+    &__search_btn {
+      background: none;
+      cursor: pointer;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      color: white;
+
+      &:hover {
+        background: rgba($color: #FFF, $alpha: 0.1);
+      }
+    }
+
+    &__search_input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 6px;
+      background: rgba($color: #FFF, $alpha: 0.1);
+      color: rgba($color: #FFF, $alpha: 0.5);
+
+      &__input {
+        background: none;
+        border: none;
+        outline: none;
+        color: white;
+        max-width: 150px;
+
+        &::placeholder {
+          font-weight: 300;
+        }
+      }
+
+      &__close {
+        cursor: pointer;
+        transition: color 100ms ease-in-out;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+
+    &__select {
+      z-index: 2;
+
+      &__control {
+        width: 155px;
+        background-color: transparent;
+        color: white;
+        border: none;
+        width: 150px;
+        cursor: pointer;
+      }
+      
+      &__menu-list {
+        cursor: pointer;
+        background: #282828;
+        border-radius: 6px;
+        width: 100%;
+        height: 100%;
+      }
+
+      &__menu {
+        width: 250px !important;
+        right: 0;
+      }
+      
+      &__option {
+        cursor: pointer;
+        padding: 20px 15px;
+
+        &:hover {
+          background: rgba($color: #FFF, $alpha: 0.1);
+        }
+      }
+    }
+  }
+}
+

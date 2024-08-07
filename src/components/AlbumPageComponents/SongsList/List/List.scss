@@ -1,0 +1,37 @@
+.list_container {
+  display: flex;
+  gap: 22px;
+  flex-direction: column;
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    align-items: center;
+    text-transform: uppercase;
+    border-bottom: solid 1px #666666;
+    font-weight: 500;
+    padding: 10px 25px;
+    color: #B3B3B3;
+    position: sticky;
+    top: 70px;
+    background: #121212;
+    z-index: 1;
+
+    &__left_side {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    &__album {
+      justify-self: left;
+      margin-left: 5rem;
+    }
+
+    &__duration {
+      justify-self: right;
+      padding-right: 30px;
+    }
+  }
+}

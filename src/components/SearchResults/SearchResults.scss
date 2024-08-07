@@ -1,0 +1,35 @@
+.search_results_container {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+  &__tracks {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__artists {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-height: 300px;
+    gap: 16px;
+    overflow-y: hidden;
+  }
+
+  &__albums {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-height: 340px;
+    gap: 16px;
+    overflow-y: hidden;
+  }
+
+  &__playlists {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-height: 340px;
+    gap: 16px;
+    overflow-y: hidden;
+  }
+}
