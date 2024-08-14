@@ -21,6 +21,7 @@ export default function SearchResults() {
               duration_ms={track.duration_ms}
               name={track.name}
               album={track.album}
+              key={track.id}
             />
           ))}
         </div>
@@ -31,6 +32,7 @@ export default function SearchResults() {
             <ArtistVerticalCard 
               cover={artist?.images?.[0]?.url}
               name={artist.name}
+              key={artist.id}
             />
           ))}
         </div>

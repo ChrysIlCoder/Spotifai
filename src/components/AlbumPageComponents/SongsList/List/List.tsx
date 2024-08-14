@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { changeAlbumOrderSelector } from "../../../../redux/features/changeAlbumOrder/changeAlbumOrderSlice";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useSearchParams } from "react-router-dom";
 import React from "react";
 import { albumsSelector } from "../../../../redux/saga/albums/slice/albumsSlice";
@@ -81,8 +81,9 @@ export default function List() {
       </div>
       <div>
         <DndContext onDragEnd={onDragEnd}>
-          <SortableContext items={albumTracks}>
+          <SortableContext items={albumTracks} strategy={verticalListSortingStrategy}>
             {albumTracks?.map((song, index) => (
+              //@ts-ignore
               <SongHorizontalCard key={song.id} index_number={index} {...song} />
             ))}
           </SortableContext>

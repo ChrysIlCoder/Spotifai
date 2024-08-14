@@ -71,9 +71,7 @@ export default function LeftSidebar() {
         collapse={collapse}
       />
       <hr className="sidebar_container__hr" />
-      {!collapse && (
-        <AlbumsVerticalList {...featured_albums} />
-      )}
+      <AlbumsVerticalList collapsed={collapse} {...featured_albums} />
     </div>
   );
 }

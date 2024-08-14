@@ -45,7 +45,7 @@ export default function Toolbar() {
     } else {
       dispatch(tracksSagaActions.sagaGetTrackById({ token: auth.access_token, id: album?.tracks?.items?.[0]?.id }))
       dispatch(showListeningToSidebarActions.setListeningSidebar(true))
-      dispatch(audioStateActions.setAudioState({ isPlaying: true, track_id: album?.tracks?.items?.[0]?.id, album_id: album?.id }))
+      dispatch(audioStateActions.setAudioState({ isPlaying: true, track_id: album?.tracks?.items?.[0]?.id, album_id: album?.id, album: album }))
     }
   }
 

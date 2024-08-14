@@ -5,7 +5,7 @@ export interface IRequestFeaturedAlbums {
 }
 
 export interface IFeaturedAlbumsList {
-  albums: IFeaturedAlbums
+  albums: IFeaturedAlbums;
 }
 
 export interface IFeaturedAlbums {

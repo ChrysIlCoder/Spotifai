@@ -18,11 +18,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { showListeningToSidebarSelector } from "../../redux/features/showListeningSidebar/showListeningSidebarSlice";
 import { showListeningToSidebarActions } from "../../redux/features/showListeningSidebar";
 import { faPlayCircle } from "@fortawesome/free-regular-svg-icons";
-import { tracksSagaActions, tracksSelector } from "../../redux/saga/tracks/slice/tracksSlice";
+import { tracksSelector } from "../../redux/saga/tracks/slice/tracksSlice";
 import { audioStateSelector } from "../../redux/features/audioState/audioStateSlice";
 import { audioStateActions } from "../../redux/features/audioState";
 import { albumsSelector } from "../../redux/saga/albums/slice/albumsSlice";
-import { authSelector } from "../../redux/saga/auth/slice/authSlice";
+import { getUtils } from "../../utils/utils";
 
 export default function Footer() {
   const show_sidebar = useSelector(
@@ -30,9 +30,10 @@ export default function Footer() {
   );
   const audioState = useSelector(audioStateSelector.getAudioState);
   const track = useSelector(tracksSelector.getTrack);
-  const auth = useSelector(authSelector.getToken)
   const album = useSelector(albumsSelector.getAlbum)
   const dispatch = useDispatch();
+
+  const {playTrack, pauseTrack, calculateGradient, formatTime} = getUtils()
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -43,7 +44,7 @@ export default function Footer() {
       if (audioRef.current) {
         dispatch(
           audioStateActions.setAudioState({
-            currentTime: audioRef.current!.currentTime
+            currentTime: audioRef.current.currentTime
           })
         );
       }
@@ -53,7 +54,7 @@ export default function Footer() {
       if (audioRef.current) {
         dispatch(
           audioStateActions.setAudioState({
-            duration: audioRef.current!.duration
+            duration: audioRef.current.duration
           })
         );
       }
@@ -101,21 +102,25 @@ export default function Footer() {
           audioRef.current.currentTime = 0;
           audioRef.current.play();
         } else if (audioState.shuffle) {
-          const random_index = Math.floor(Math.random() * album?.tracks?.items?.length)
+          const random_index = Math.floor(Math.random() * audioState.album?.tracks?.items?.length)
           
-          dispatch(tracksSagaActions.sagaGetTrackById({ token: auth.access_token, id: album?.tracks?.items?.[random_index]?.id }))
           dispatch(showListeningToSidebarActions.setListeningSidebar(true))
-          dispatch(audioStateActions.setAudioState({ isPlaying: true, track_id: album?.tracks?.items?.[random_index]?.id, album_id: album?.id }))
+          playTrack({
+            track_id: audioState.album?.tracks?.items?.[random_index]?.id, 
+            album: album,
+          })
         } else {
-          const index = album?.tracks?.items?.findIndex(album_track => album_track.id === track?.id)
+          const index = audioState.album?.tracks?.items?.findIndex(album_track => album_track.id === track?.id)
 
-          if (index !== album?.tracks?.items?.length - 1) {
-            dispatch(tracksSagaActions.sagaGetTrackById({ token: auth.access_token, id: album?.tracks?.items?.[index + 1]?.id }))
+          if (index !== audioState.album?.tracks?.items?.length - 1) {
             dispatch(showListeningToSidebarActions.setListeningSidebar(true))
-            dispatch(audioStateActions.setAudioState({ isPlaying: true, track_id: album?.tracks?.items?.[index + 1]?.id, album_id: album?.id }))
+            playTrack({
+              track_id: audioState.album?.tracks?.items?.[index + 1]?.id, 
+              album: album,
+            })
           } else {
             audioRef.current.currentTime = 0
-            dispatch(audioStateActions.setAudioState({ isPlaying: false }))
+            pauseTrack()
             audioRef.current.pause()
           }
         }
@@ -133,16 +138,29 @@ export default function Footer() {
     };
   }, [audioRef.current, audioState.loop, audioState.shuffle, track]);
 
-  const formatTime = (time: number) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
+  const handleBackClick = () => {
+    const index = audioState.album?.tracks?.items?.findIndex(album_track => album_track.id === track?.id)
 
-  const calculateGradient = (min: number, max: number, isHovered: boolean) => {
-    const percentage = (min / max) * 100;
-    return `linear-gradient(to right, ${isHovered ? "#1cb65e" : "white"} ${percentage}%, rgba(255, 255, 255, 0.5) ${percentage}%)`;
-  };
+    if (index > 0) {
+      dispatch(showListeningToSidebarActions.setListeningSidebar(true))
+      playTrack({
+        track_id: audioState.album?.tracks?.items?.[index - 1]?.id, 
+        album: album
+      })
+    }
+  }
+
+  const handleForwardClick = () => {
+    const index = audioState.album?.tracks?.items?.findIndex(album_track => album_track.id === track?.id)
+    
+    if (index !== album?.tracks?.items?.length - 1) {
+      dispatch(showListeningToSidebarActions.setListeningSidebar(true))
+      playTrack({
+        track_id: audioState.album?.tracks?.items?.[index + 1]?.id, 
+        album: album
+      })
+    }
+  }
 
   return (
     <div className="footer_container">
@@ -183,7 +201,7 @@ export default function Footer() {
             <button className="footer_container__center_console__top__shuffle" onClick={() => dispatch(audioStateActions.setAudioState({ shuffle: !audioState.shuffle }))}>
               <FontAwesomeIcon color={audioState.shuffle ? "#63CF6C" : "white"} size="xl" icon={faShuffle} />
             </button>
-            <button className="footer_container__center_console__top__back" onClick={() => {}}>
+            <button className="footer_container__center_console__top__back" onClick={handleBackClick}>
               <FontAwesomeIcon size="xl" icon={faBackwardStep} />
             </button>
             <button
@@ -201,7 +219,7 @@ export default function Footer() {
                 icon={audioState.isPlaying ? faPause : faPlay}
               />
             </button>
-            <button className="footer_container__center_console__top__forward" onClick={() => {}}>
+            <button className="footer_container__center_console__top__forward" onClick={handleForwardClick}>
               <FontAwesomeIcon size="xl" icon={faForwardStep} />
             </button>
             <button className="footer_container__center_console__top__loop" onClick={() => dispatch(audioStateActions.setAudioState({ loop: !audioState.loop }))}>
@@ -264,10 +282,6 @@ export default function Footer() {
                 showListeningToSidebarActions.setListeningSidebar(!show_sidebar)
               )
             }
-          />
-          <FontAwesomeIcon
-            className="footer_container__right_side__icons__icon"
-            icon={faHeadphones}
           />
           <FontAwesomeIcon
             className="footer_container__right_side__icons__icon"
