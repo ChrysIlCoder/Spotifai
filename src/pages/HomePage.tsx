@@ -7,8 +7,6 @@ import HomePageLayout from "../components/Layouts/HomePageLayout/HomePageLayout"
 import Section from "../components/Section/Section";
 import { useSelector, useDispatch } from "react-redux";
 import { authSelector } from "../redux/saga/auth/slice/authSlice";
-import { getAlbumSectionRandomName } from "../utils/RandomAlbumSectionName/randomAlbumSectionName";
-import { getChunksFromAlbumsList } from "../utils/ChunkAlbumList/chunkAlbumList";
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 import {
   albumsSagaActions,
@@ -17,8 +15,10 @@ import {
 import {
   IFeaturedAlbumItem,
 } from "../interfaces/IFeaturedAlbums";
+import { getUtils } from "../utils/utils";
 
 export default function HomePage() {
+  const {getChunksFromAlbumsList, getAlbumSectionRandomName} = getUtils()
   const auth = useSelector(authSelector.getToken);
   const featured_albums = useSelector(albumsSelector.getFeaturedAlbums);
   const loading = useSelector(albumsSelector.getIsLoading);

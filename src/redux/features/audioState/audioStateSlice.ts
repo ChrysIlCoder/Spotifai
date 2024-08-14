@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { IAlbum } from "../../../interfaces/ISeveralAlbums";
 
 export interface IAudioStateInitalState {
   volume: number;
@@ -9,6 +10,7 @@ export interface IAudioStateInitalState {
   album_id: string;
   loop: boolean;
   shuffle: boolean;
+  album: IAlbum;
 }
 
 const initialState: IAudioStateInitalState = {
@@ -20,6 +22,7 @@ const initialState: IAudioStateInitalState = {
   album_id: '',
   loop: false,
   shuffle: false,
+  album: {} as IAlbum,
 };
 
 const audioStateSlice = createSlice({

@@ -4,7 +4,7 @@
   text-align: left;
   gap: 18px;
   
-  &__album {
+  &__name {
     transition: opacity 100ms ease-in-out;
     opacity: 0.70;
     cursor: pointer;
@@ -12,5 +12,12 @@
     &:hover {
       opacity: 1;
     }
+  }
+
+  &__image {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    cursor: pointer;
   }
 }

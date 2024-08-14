@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./AlbumTopBanner.scss";
 import { useSelector } from "react-redux";
 import { albumsSelector } from "../../../redux/saga/albums/slice/albumsSlice";
-import { calculateTotalDuration } from "../../../utils/TrackUtils/tracksUtils";
+import { useColor } from "color-thief-react";
+import { getUtils } from "../../../utils/utils";
 
 export default function AlbumTopBanner() {
+  const {calculateTotalDuration} = getUtils()
   const album = useSelector(albumsSelector.getAlbum);
   const [totalDuration, setTotalDuration] = useState({ hours: 0, minutes: 0 });
+  const { data } = useColor(album?.images?.[0]?.url, 'rgbArray', { crossOrigin: 'anonymous' })
 
   useEffect(() => {
     if (album?.tracks?.items) {
@@ -15,6 +18,8 @@ export default function AlbumTopBanner() {
     }
   }, [album]);
 
+  console.log(data)
+
   return (
     <div className="album_top_banner_container">
       <img
@@ -22,6 +27,7 @@ export default function AlbumTopBanner() {
         src={album?.images?.[0]?.url}
         alt="album cover"
         onClick={() => window.open(album?.external_urls?.spotify)}
+        style={{ boxShadow: `0 8px 8px 0 rgba(${data?.[0]}, ${data?.[1]}, ${data?.[2]}, 0.25)` }}
       />
       <div className="album_top_banner_container__info">
         <h1

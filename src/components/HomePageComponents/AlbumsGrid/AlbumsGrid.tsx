@@ -2,11 +2,12 @@ import AlbumHorizontalCard from "../../AlbumHorizontalCard/AlbumHorizontalCard";
 import React, { useEffect, useState } from "react";
 import "./AlbumsGrid.scss";
 import { useSelector } from "react-redux";
-import { shuffleArray } from "../../../utils/ShuffleArray/shuffleArray";
 import { albumsSelector } from "../../../redux/saga/albums/slice/albumsSlice";
 import { IFeaturedAlbumItem } from "../../../interfaces/IFeaturedAlbums";
+import { getUtils } from "../../../utils/utils";
 
 export default function AlbumsGrid() {
+  const {shuffleArray} = getUtils()
   const [shuffledAlbums, setShuffledAlbums] = useState<IFeaturedAlbumItem[]>([])
   const featured_albums = useSelector(albumsSelector.getFeaturedAlbums);
 
