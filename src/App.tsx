@@ -23,8 +23,8 @@ export default function App() {
   useEffect(() => {
     dispatch(
       authSagaActions.sagaGetToken({
-        client_id: "1bde56ca8e774bd9864388566858147f",
-        client_secret: "f85d93194b83473a8a9c49dfc6bc16bf"
+        client_id: "",
+        client_secret: ""
       })
     );
   }, []);
