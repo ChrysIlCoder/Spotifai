@@ -11,7 +11,7 @@ import {
   faVolumeHigh,
   faVolumeLow,
   faVolumeOff,
-  faVolumeXmark
+  faVolumeXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,21 +30,23 @@ export default function Footer() {
   );
   const audioState = useSelector(audioStateSelector.getAudioState);
   const track = useSelector(tracksSelector.getTrack);
-  const album = useSelector(albumsSelector.getAlbum)
+  const album = useSelector(albumsSelector.getAlbum);
   const dispatch = useDispatch();
 
-  const {playTrack, pauseTrack, calculateGradient, formatTime} = getUtils()
+  const { playTrack, pauseTrack, calculateGradient, formatTime } = getUtils();
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const [hoveredSlider, setHoveredSlider] = useState<"song" | "volume" | null>(null);
+  const [hoveredSlider, setHoveredSlider] = useState<"song" | "volume" | null>(
+    null
+  );
 
   useEffect(() => {
     const updateCurrentTime = () => {
       if (audioRef.current) {
         dispatch(
           audioStateActions.setAudioState({
-            currentTime: audioRef.current.currentTime
+            currentTime: audioRef.current.currentTime,
           })
         );
       }
@@ -54,7 +56,7 @@ export default function Footer() {
       if (audioRef.current) {
         dispatch(
           audioStateActions.setAudioState({
-            duration: audioRef.current.duration
+            duration: audioRef.current.duration,
           })
         );
       }
@@ -85,9 +87,9 @@ export default function Footer() {
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.src = ''
+      audioRef.current.src = "";
     }
-  }, [audioState.track_id])
+  }, [audioState.track_id]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -102,65 +104,73 @@ export default function Footer() {
           audioRef.current.currentTime = 0;
           audioRef.current.play();
         } else if (audioState.shuffle) {
-          const random_index = Math.floor(Math.random() * audioState.album?.tracks?.items?.length)
-          
-          dispatch(showListeningToSidebarActions.setListeningSidebar(true))
+          const random_index = Math.floor(
+            Math.random() * audioState.album?.tracks?.items?.length
+          );
+
+          dispatch(showListeningToSidebarActions.setListeningSidebar(true));
           playTrack({
-            track_id: audioState.album?.tracks?.items?.[random_index]?.id, 
+            track_id: audioState.album?.tracks?.items?.[random_index]?.id,
             album: album,
-          })
+          });
         } else {
-          const index = audioState.album?.tracks?.items?.findIndex(album_track => album_track.id === track?.id)
+          const index = audioState.album?.tracks?.items?.findIndex(
+            (album_track) => album_track.id === track?.id
+          );
 
           if (index !== audioState.album?.tracks?.items?.length - 1) {
-            dispatch(showListeningToSidebarActions.setListeningSidebar(true))
+            dispatch(showListeningToSidebarActions.setListeningSidebar(true));
             playTrack({
-              track_id: audioState.album?.tracks?.items?.[index + 1]?.id, 
+              track_id: audioState.album?.tracks?.items?.[index + 1]?.id,
               album: album,
-            })
+            });
           } else {
-            audioRef.current.currentTime = 0
-            pauseTrack()
-            audioRef.current.pause()
+            audioRef.current.currentTime = 0;
+            pauseTrack();
+            audioRef.current.pause();
           }
         }
       }
     };
-  
+
     if (audioRef.current) {
-      audioRef.current.addEventListener('ended', handleEnded);
+      audioRef.current.addEventListener("ended", handleEnded);
     }
-  
+
     return () => {
       if (audioRef.current) {
-        audioRef.current.removeEventListener('ended', handleEnded);
+        audioRef.current.removeEventListener("ended", handleEnded);
       }
     };
   }, [audioRef.current, audioState.loop, audioState.shuffle, track]);
 
   const handleBackClick = () => {
-    const index = audioState.album?.tracks?.items?.findIndex(album_track => album_track.id === track?.id)
+    const index = audioState.album?.tracks?.items?.findIndex(
+      (album_track) => album_track.id === track?.id
+    );
 
     if (index > 0) {
-      dispatch(showListeningToSidebarActions.setListeningSidebar(true))
+      dispatch(showListeningToSidebarActions.setListeningSidebar(true));
       playTrack({
-        track_id: audioState.album?.tracks?.items?.[index - 1]?.id, 
-        album: album
-      })
+        track_id: audioState.album?.tracks?.items?.[index - 1]?.id,
+        album: album,
+      });
     }
-  }
+  };
 
   const handleForwardClick = () => {
-    const index = audioState.album?.tracks?.items?.findIndex(album_track => album_track.id === track?.id)
-    
+    const index = audioState.album?.tracks?.items?.findIndex(
+      (album_track) => album_track.id === track?.id
+    );
+
     if (index !== album?.tracks?.items?.length - 1) {
-      dispatch(showListeningToSidebarActions.setListeningSidebar(true))
+      dispatch(showListeningToSidebarActions.setListeningSidebar(true));
       playTrack({
-        track_id: audioState.album?.tracks?.items?.[index + 1]?.id, 
-        album: album
-      })
+        track_id: audioState.album?.tracks?.items?.[index + 1]?.id,
+        album: album,
+      });
     }
-  }
+  };
 
   return (
     <div className="footer_container">
@@ -182,26 +192,41 @@ export default function Footer() {
             {track?.name ?? "No track"}
           </span>
           <div className="footer_container__left_side__song_info__artists">
-            {track?.artists
-              ?.map((artist, index) => (
-                <span
-                  className="footer_container__left_side__song_info__artists__artist"
-                  onClick={() => window.open(artist.external_urls.spotify)}
-                >
-                  {artist.name}
-                  {index < track.artists.length - 1 ? ', ' : ''}
-                </span>
-              )) ?? "No artists"}
+            {track?.artists?.map((artist, index) => (
+              <span
+                className="footer_container__left_side__song_info__artists__artist"
+                onClick={() => window.open(artist.external_urls.spotify)}
+              >
+                {artist.name}
+                {index < track.artists.length - 1 ? ", " : ""}
+              </span>
+            )) ?? "No artists"}
           </div>
         </div>
       </div>
       {track?.preview_url ? (
         <div className="footer_container__center_console">
           <div className="footer_container__center_console__top">
-            <button className="footer_container__center_console__top__shuffle" onClick={() => dispatch(audioStateActions.setAudioState({ shuffle: !audioState.shuffle }))}>
-              <FontAwesomeIcon color={audioState.shuffle ? "#63CF6C" : "white"} size="xl" icon={faShuffle} />
+            <button
+              className="footer_container__center_console__top__shuffle"
+              onClick={() =>
+                dispatch(
+                  audioStateActions.setAudioState({
+                    shuffle: !audioState.shuffle,
+                  })
+                )
+              }
+            >
+              <FontAwesomeIcon
+                color={audioState.shuffle ? "#63CF6C" : "white"}
+                size="xl"
+                icon={faShuffle}
+              />
             </button>
-            <button className="footer_container__center_console__top__back" onClick={handleBackClick}>
+            <button
+              className="footer_container__center_console__top__back"
+              onClick={handleBackClick}
+            >
               <FontAwesomeIcon size="xl" icon={faBackwardStep} />
             </button>
             <button
@@ -209,7 +234,7 @@ export default function Footer() {
               onClick={() =>
                 dispatch(
                   audioStateActions.setAudioState({
-                    isPlaying: !audioState.isPlaying
+                    isPlaying: !audioState.isPlaying,
                   })
                 )
               }
@@ -219,11 +244,25 @@ export default function Footer() {
                 icon={audioState.isPlaying ? faPause : faPlay}
               />
             </button>
-            <button className="footer_container__center_console__top__forward" onClick={handleForwardClick}>
+            <button
+              className="footer_container__center_console__top__forward"
+              onClick={handleForwardClick}
+            >
               <FontAwesomeIcon size="xl" icon={faForwardStep} />
             </button>
-            <button className="footer_container__center_console__top__loop" onClick={() => dispatch(audioStateActions.setAudioState({ loop: !audioState.loop }))}>
-              <FontAwesomeIcon color={audioState.loop ? "#63CF6C" : "white"} size="xl" icon={faArrowsRotate} />
+            <button
+              className="footer_container__center_console__top__loop"
+              onClick={() =>
+                dispatch(
+                  audioStateActions.setAudioState({ loop: !audioState.loop })
+                )
+              }
+            >
+              <FontAwesomeIcon
+                color={audioState.loop ? "#63CF6C" : "white"}
+                size="xl"
+                icon={faArrowsRotate}
+              />
             </button>
           </div>
           <div className="footer_container__center_console__bottom">
@@ -241,7 +280,7 @@ export default function Footer() {
                   audioRef.current.currentTime = Number(e.target.value);
                   dispatch(
                     audioStateActions.setAudioState({
-                      currentTime: audioRef.current!.currentTime
+                      currentTime: audioRef.current!.currentTime,
                     })
                   );
                 }
@@ -249,7 +288,11 @@ export default function Footer() {
               onMouseEnter={() => setHoveredSlider("song")}
               onMouseLeave={() => setHoveredSlider(null)}
               style={{
-                background: calculateGradient(audioState.currentTime, audioState.duration, hoveredSlider === "song")
+                background: calculateGradient(
+                  audioState.currentTime,
+                  audioState.duration,
+                  hoveredSlider === "song"
+                ),
               }}
             />
             <span className="footer_container__center_console__bottom__total_time">
@@ -297,7 +340,7 @@ export default function Footer() {
             onClick={() =>
               dispatch(
                 audioStateActions.setAudioState({
-                  volume: audioState.volume === 0 ? 100 : 0
+                  volume: audioState.volume === 0 ? 100 : 0,
                 })
               )
             }
@@ -310,14 +353,18 @@ export default function Footer() {
           onChange={(e) =>
             dispatch(
               audioStateActions.setAudioState({
-                volume: Number(e.target.value)
+                volume: Number(e.target.value),
               })
             )
           }
           onMouseEnter={() => setHoveredSlider("volume")}
           onMouseLeave={() => setHoveredSlider(null)}
           style={{
-            background: calculateGradient(audioState.volume, 100, hoveredSlider === "volume")
+            background: calculateGradient(
+              audioState.volume,
+              100,
+              hoveredSlider === "volume"
+            ),
           }}
         />
       </div>

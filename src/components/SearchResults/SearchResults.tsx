@@ -29,9 +29,10 @@ export default function SearchResults() {
       <Section title={Object.keys(search_results)[1].toString()}>
         <div className="search_results_container__artists">
           {search_results.artists.items.map((artist) => (
-            <ArtistVerticalCard 
+            <ArtistVerticalCard
               cover={artist?.images?.[0]?.url}
               name={artist.name}
+              id={artist?.id}
               key={artist.id}
             />
           ))}
